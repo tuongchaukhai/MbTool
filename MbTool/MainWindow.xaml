@@ -1,0 +1,69 @@
+﻿<Window x:Class="MbTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MbTool"
+        mc:Ignorable="d"
+        Title="MbTool" ResizeMode="NoResize">
+    <Grid>
+        <DataGrid Name="myDataGrid" Margin="10" MaxHeight="610" VerticalAlignment="Top" HorizontalAlignment="Center"
+              ScrollViewer.CanContentScroll="True"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  AutoGenerateColumns="False"
+                  SelectionUnit = "Cell"
+                  SizeChanged="myDataGrid_SizeChanged" 
+                  Sorting="myDataGrid_Sorting"
+                  IsReadOnly="True"
+                  ItemsSource="{Binding Path=phoneList,NotifyOnSourceUpdated = True, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Phone" Binding="{Binding Process.MainWindowTitle, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="ADB ID" Binding="{Binding AdbId, UpdateSourceTrigger=PropertyChanged}" Width="50"  />
+                <DataGridTemplateColumn Header="Action">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Name="btnAction" MouseLeftButtonDown="btnAction_MouseLeftButtonDown" Tag="{Binding}">
+                                <Label.Style>
+                                    <Style TargetType="Label">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        <Setter Property="Content" Value="START" />
+                                        <Setter Property="Background" Value="White" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Action}" Value="True">
+                                                <Setter Property="Content" Value="STOP" />
+                                                <Setter Property="Background" Value="Blue" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Label.Style>
+                            </Label>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Sound">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Name="btnSound" MouseLeftButtonDown="btnSound_MouseLeftButtonDown" Tag="{Binding}">
+                                <Label.Style>
+                                    <Style TargetType="Label">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        <Setter Property="Content" Value="OFF" />
+                                        <Setter Property="Background" Value="White" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Sound}" Value="True">
+                                                <Setter Property="Content" Value="ON" />
+                                                <Setter Property="Background" Value="Brown" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Label.Style>
+                            </Label>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
