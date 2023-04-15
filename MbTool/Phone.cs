@@ -25,6 +25,7 @@ namespace MbTool
 
         public static string[] Types { get; } = new[] { "QUEST", "SHOP" };
 
+
         public void AddPhone()
         {
             Process[] processes = Process.GetProcessesByName(Setting.ProcessName); //lấy processName từ class Setting
@@ -34,7 +35,9 @@ namespace MbTool
             {
                 Process = phoneProcess,
                 AdbId = PhoneADBIDGet(phoneProcess.MainWindowTitle),
-                Type = "QUEST"
+                Type = "QUEST",
+                Action = false,
+                Sound = false,
             }).ToList();
 
             foreach (var phone in phonesToAdd)

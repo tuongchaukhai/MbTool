@@ -20,7 +20,6 @@ namespace MbTool
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new PhoneModel();
             timerProcess.Tick += TimerProcess_Tick;
             timerProcess.Start();
         }
@@ -47,7 +46,7 @@ namespace MbTool
             }
             finally //kết thúc "try"
             {
-                isTaskExecuting = false; 
+                isTaskExecuting = false;
             }
         }
 
@@ -55,7 +54,7 @@ namespace MbTool
         {
             double gridWidth = myDataGrid.ActualWidth; //lấy width của myDataGrid
             double gridHeight = myDataGrid.ActualHeight; //lấy height
-            double windowWidth = gridWidth + 40; 
+            double windowWidth = gridWidth + 40;
             double windowHeight = gridHeight + 60;
 
             this.Width = windowWidth; //this tức là cái width của form này
@@ -84,7 +83,6 @@ namespace MbTool
                     phone.Action = false;
                     phone.timerSet.TimerCheckShop_Stop();
                 }
-                //phone.Type =  item.Type.Content
             }
 
         }
@@ -96,7 +94,7 @@ namespace MbTool
             if (phone != null)
             {
                 Label item = sender as Label;
-                if (item.Content.ToString() == "OFF") 
+                if (item.Content.ToString() == "OFF")
                 {
                     item.Background = Brushes.Brown;
                     item.Content = "ON";
@@ -111,23 +109,30 @@ namespace MbTool
             }
         }
 
+        private bool isSorted = false;
         private void myDataGrid_Sorting(object sender, DataGridSortingEventArgs e)
-        //Thiết lâp sắp xếp, bởi vì mỗi lần nhấn Sort thì nó sẽ sắp xếp theo kiểu asc hoặc desc, ở đây tạo ra mục đích chỉ cho nó sort theo asc
         {
             DataGridColumn column = myDataGrid.Columns[0]; //columns 0 là cột đầu
             if (myDataGrid != null)
             {
-                // Sắp xếp theo cột và kiểu tăng dần
-                myDataGrid.Items.SortDescriptions.Clear();
-                myDataGrid.Items.SortDescriptions.Add(new SortDescription(column.SortMemberPath, ListSortDirection.Descending));
-                column.SortDirection = ListSortDirection.Descending;
-
-                // Cập nhật lại view
+                if (!isSorted)
+                {
+                    isSorted = true;
+                    // Sắp xếp theo cột và kiểu tăng dần
+                    myDataGrid.Items.SortDescriptions.Clear();
+                    myDataGrid.Items.SortDescriptions.Add(new SortDescription(column.SortMemberPath, ListSortDirection.Descending));
+                    column.SortDirection = ListSortDirection.Descending;
+                }
+                else
+                {
+                    //hủy sort
+                    isSorted = false;
+                    myDataGrid.Items.SortDescriptions.Clear();
+                    column.SortDirection = null;
+                    e.Handled = true;
+                }
                 myDataGrid.Items.Refresh();
             }
         }
-
-
     }
-
 }
