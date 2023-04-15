@@ -20,7 +20,7 @@ namespace MbTool
         public MainWindow()
         {
             InitializeComponent();
-
+            DataContext = new PhoneModel();
             timerProcess.Tick += TimerProcess_Tick;
             timerProcess.Start();
         }
@@ -40,26 +40,10 @@ namespace MbTool
             {
                 //thêm vào datagird
                 pdata.AddPhone(); //thực hiện chạy hàm AddPhone bên phonedata kiểm tra //trong AddPhone này nếu duyệt được sẽ thêm vào phoneList cho nên bước tiếp theo duyệt phoneList
-                foreach (var item in PhoneData.phoneList) //duyệt từng item trong phoneList
-                {
-                    if (!myDataGrid.Items.Contains(item)) //nếu trong mydatagrid này ko có tồn tại cái item này
-                    {
-                        myDataGrid.Items.Add(item); //thêm vào datagrid
-                    }
-                }
 
-                //xóa khỏi datagird
                 pdata.RemovePhone(); //hàm này sẽ xóa những item trong phoneList nào không còn tồn tại (đã tắt) trong process[].
-                foreach (var item in myDataGrid.Items.Cast<PhoneModel>().ToList())
-                //chạy từng item trong datagrid
-                //cái .Cast này là nó ép kiểu toàn bộ item (phone) trong datagrid về kiểu PhoneModel để nó bắt đầu duyệt trong phoneList
-                // vì phoneList đc khởi tạo kiểu PhoneModel (ObservableCollection<PhoneModel> phoneList ...) nên phải ép kiểu cái datagrid mới có thể làm việc được với nó
-                {
-                    if (!PhoneData.phoneList.Contains(item)) //nếu trong phoneList không có cái item (item của datagrid) này
-                    {
-                        myDataGrid.Items.Remove(item); //xóa item nào trong datagrid ko có trong phoneList
-                    }
-                }
+
+                myDataGrid.ItemsSource = PhoneData.phoneList;
             }
             finally //kết thúc "try"
             {
@@ -100,6 +84,7 @@ namespace MbTool
                     phone.Action = false;
                     phone.timerSet.TimerCheckShop_Stop();
                 }
+                //phone.Type =  item.Type.Content
             }
 
         }

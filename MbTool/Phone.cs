@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace MbTool
     {
         public Process Process { get; set; }
         public string AdbId { get; set; }
+        public string Type { get; set; }
         public bool Action { get; set; }
         public bool Sound { get; set; }
 
@@ -21,6 +23,8 @@ namespace MbTool
     {
         public static ObservableCollection<PhoneModel> phoneList = new ObservableCollection<PhoneModel>(); //Mấy các kiểu collection này là dùng để chứa tập hợp các <...> 
 
+        public static string[] Types { get; } = new[] { "QUEST", "SHOP" };
+
         public void AddPhone()
         {
             Process[] processes = Process.GetProcessesByName(Setting.ProcessName); //lấy processName từ class Setting
@@ -29,7 +33,8 @@ namespace MbTool
             var phonesToAdd = notInPhoneList.Select(phoneProcess => new PhoneModel
             {
                 Process = phoneProcess,
-                AdbId = PhoneADBIDGet(phoneProcess.MainWindowTitle)
+                AdbId = PhoneADBIDGet(phoneProcess.MainWindowTitle),
+                Type = "QUEST"
             }).ToList();
 
             foreach (var phone in phonesToAdd)

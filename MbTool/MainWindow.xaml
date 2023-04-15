@@ -15,12 +15,20 @@
                   SelectionUnit = "Cell"
                   SizeChanged="myDataGrid_SizeChanged" 
                   Sorting="myDataGrid_Sorting"
-                  IsReadOnly="True"
+             
                   ItemsSource="{Binding Path=phoneList,NotifyOnSourceUpdated = True, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Phone" Binding="{Binding Process.MainWindowTitle, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="ADB ID" Binding="{Binding AdbId, UpdateSourceTrigger=PropertyChanged}" Width="50"  />
-                <DataGridTemplateColumn Header="Action">
+                <DataGridTextColumn Header="PHONE" Binding="{Binding Process.MainWindowTitle, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="ADB ID" Binding="{Binding AdbId, UpdateSourceTrigger=PropertyChanged}" Width="50" />
+                <DataGridComboBoxColumn Header="TYPE" Width="Auto" SelectedItemBinding="{Binding Type}" ItemsSource="{Binding Source={x:Static local:PhoneData.Types}}">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                </DataGridComboBoxColumn>
+                <DataGridTemplateColumn Header="ACTION">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Label Name="btnAction" MouseLeftButtonDown="btnAction_MouseLeftButtonDown" Tag="{Binding}">
@@ -42,7 +50,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="Sound">
+                <DataGridTemplateColumn Header="SOUND">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Label Name="btnSound" MouseLeftButtonDown="btnSound_MouseLeftButtonDown" Tag="{Binding}">

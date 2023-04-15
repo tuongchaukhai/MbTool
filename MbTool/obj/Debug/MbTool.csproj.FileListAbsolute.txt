@@ -112,4 +112,3 @@ C:\Users\luong\OneDrive\Desktop\MbTool\MbTool\obj\Debug\MbTool.csproj.CoreCompil
 C:\Users\luong\OneDrive\Desktop\MbTool\MbTool\obj\Debug\MbTool.csproj.CopyComplete
 C:\Users\luong\OneDrive\Desktop\MbTool\MbTool\obj\Debug\MbTool.exe
 C:\Users\luong\OneDrive\Desktop\MbTool\MbTool\obj\Debug\MbTool.pdb
-E:\Games\MapleStory\Tool\MbTool\MbTool\obj\Debug\GeneratedInternalTypeHelper.g.cs
